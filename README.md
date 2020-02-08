@@ -1,25 +1,41 @@
-# Friends List Refactor
+# AJAX
 
-In this activity we will use our new React skills to further refactor the Friends List application from earlier.
+In this activity we will create a simple React application with which users can query the OMDB API and display information about the movie searched for.
 
 ## Instructions
 
-* Replace your React App's `src` folder with [Unsolved/src](Unsolved/src). Stop the dev server if it is already running. Start the app in dev mode by running `npm start`.
+* Replace your React application's `src` folder with [Unsolved/src](Unsolved/src). 
 
-* Open [localhost:3000](http://localhost:3000) in your browser and take a moment to study the rendered app.
+* This example uses Bootstrap, so be sure to add the Bootstrap CDN to your application's `index.html` file. You may use the following snippet below:
 
-* Attempt to complete each of the following:
-  
-  1. Refactor the `App` component so that it's a class component. Set the component's initial state to the `friends` JSON array. Inside of the `render` method, map over `this.state.friends` to render each `FriendCard` component.
+```html
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"/>
+```
 
-  2. Refactor the `App` component so that rather than rendering each `FriendCard` component manually, use a map to render one `FriendCard` component for each object in the `friends` JSON, passing in the appropriate props.
+* Be sure to install the axios library by running `npm install axios` in your terminal.
 
-  3. Add functionality to the application so that when the red X icon on a `FriendCard` is clicked, that `FriendCard` is removed from the page. To accomplish this, you should define a method inside of `App` which accepts an `id` parameter, and then utilize filter to create a new array of friends without the passed `id`. Then set `this.state.friends` to this new filtered array. You'll want to pass this method into each `FriendCard` component and attach an `onClick` listener to the "remove" span.
+* Stop the dev server if it is already running. Start the app in dev mode by running `npm start`.
 
-## Hints
+* Open your browser to [localhost:3000](http://localhost:3000) and study the rendered application.
 
-* Test your application after each step!!
+* This application is supposed to allow users to search for the name of a movie via the form on the right of the page, and display information from the OMDB API on the left side. Currently the application isn't fully functional.
 
-* Refer back to the previous in class activities for if you get stuck anywhere.
+* Open the `src/OmdbContainer.js` and add the following code:
 
-* If you get stuck working with the event handler, spend a few minutes reading [React's Documentation](https://facebook.github.io/react/docs/handling-events.html) on handling events. 
+  * Add a `componentDidMount` method which should utilize the `API.js` module to query the OMDB API for the movie "The Matrix" when the component mounts. Then update this component's `result` state with the result of the AJAX request. You can verify you completed this step correctly by refreshing the page in your web browser. If successful, the application should display information about the movie "The Matrix" when the page first loads.
+
+  * Add a `handleInputChange` method which should be called whenever the user types into the input field. Inside of this method, set `this.state.search` equal to the new value of the input field. You can verify you've completed this step correctly if you can now type into the input field.
+
+  * Add a `handleFormSubmit` method which should be called when the form is submitted. Inside of this method, utilize the `API` module to search the OMDB API for the value of `this.state.search`. Then update this component's `result` state with the result. You can verify you completed this step correctly by searching for the name of a movie. If successful, you should see the movie poster and some information about the movie appear in the left card.
+
+### Bonus
+
+* After you get the rest of the application code working, add code so that if no movie results are found, a message is displayed indicating this in place of the `MovieDetail` component. Otherwise display the `MovieDetail` component. You can verify you completed this step correctly by searching for an empty string. If successful, you should see your message being displayed instead of any movie information.
+
+### Hints
+
+* Don't forget to call `event.preventDefault()` inside of any event handlers called in response to an HTML form being submitted.
+
+* The only code you need to modify is inside of `OmdbContainer.js`.
+
+* If you make it to the bonus, check out [React's Documentation on Conditional Rendering](https://facebook.github.io/react/docs/conditional-rendering.html). Use any of the techniques described to complete the bonus.
